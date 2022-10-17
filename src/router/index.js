@@ -5,12 +5,12 @@ const router = createRouter({
   routes: [
     {
       path: "/",
-      name: "Index",
       redirect: "/num1",
     },
     {
       path: "/num1",
       name: "num1",
+      meta: { title: "简单桶排序" },
       component: () => import("../views/Num1.vue"),
     },
   ],
