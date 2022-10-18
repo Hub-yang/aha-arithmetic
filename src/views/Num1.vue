@@ -1,6 +1,6 @@
 <template>
   <h3>简单桶排序(1~10,最多10个)，输入数字，以","隔开，点击按钮查看排序结果</h3>
-  <input type="text" v-focus v-model.trim="sortNum">
+  <input type="text" v-focus ref="input" v-model.trim="sortNum">
   <button @click="handleClick('asc')">升序排序</button>
   <button @click="handleClick('desc')">降序排序</button>
   <h3>结果：<span v-show="res.length">{{res}}</span></h3>
@@ -14,14 +14,17 @@ const vFocus = {
     el.focus()
   }
 }
+const input = ref()
 const res = ref([])
 const sortNum = ref("")
 function handleClick(sortBy) {
   const sortArr = sortNum.value.split(",").map((num) => Number(num))
   if (sortArr.some((num) => num > 10 || num < 1)) {
     alert("请输入1~10以内的数字！")
+    input.value.focus()
   } else if (sortArr.length >= 10) {
     alert("最多输入10个数字！")
+    input.value.focus()
   } else {
     bucketSort(sortArr, sortBy)
   }
