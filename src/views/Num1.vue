@@ -1,24 +1,23 @@
 <template>
   <h3>简单桶排序输入整数，以","隔开，点击按钮查看排序结果</h3>
-  <input type="text" v-focus ref="input" v-model.trim="sortNum">
+  <input type="text" v-focus ref="input" v-model.trim="sortNum" />
   <button @click="handleClick('asc')">升序排序</button>
   <button @click="handleClick('desc')">降序排序</button>
-  <h3>结果：<span v-show="res.length">{{res}}</span></h3>
+  <h3>
+    结果：<span v-show="res.length">{{ res }}</span>
+  </h3>
 </template>
 
 <script setup>
 import { ref, reactive } from "vue"
-
-const vFocus = {
-  mounted(el) {
-    el.focus()
-  }
-}
 const input = ref()
 const res = ref([])
 const sortNum = ref("")
 function handleClick(sortBy) {
-  const sortArr = sortNum.value.replace(/\s*/g, "").split(",").map((num) => Number(num))
+  const sortArr = sortNum.value
+    .replace(/\s*/g, "")
+    .split(",")
+    .map((num) => Number(num))
 
   const intNum = Math.max(...sortArr)
 
@@ -45,7 +44,7 @@ function bucketSort(sortArr, intNum, sortBy) {
   }
 
   // 依次循环遍历打印目标
-  if (sortBy == 'asc') {
+  if (sortBy == "asc") {
     // 升序
     for (let i = 0; i <= intNum; i++) {
       for (let j = 1; j <= arr[i]; j++) {
@@ -64,6 +63,4 @@ function bucketSort(sortArr, intNum, sortBy) {
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>
