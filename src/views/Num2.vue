@@ -40,7 +40,7 @@ function bubbleSort(arr, sortBy) {
           arr[j + 1] = temp
         }
         // 降序
-      } else {
+      } else if (sortBy == "desc") {
         let temp = arr[j]
         if (arr[j] < arr[j + 1]) {
           arr[j] = arr[j + 1]

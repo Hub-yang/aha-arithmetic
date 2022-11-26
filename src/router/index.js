@@ -5,7 +5,7 @@ const router = createRouter({
   routes: [
     {
       path: "/",
-      redirect: "/num2",
+      redirect: "/num3",
     },
     {
       path: "/num1",
@@ -18,6 +18,12 @@ const router = createRouter({
       name: "num2",
       meta: { title: "冒泡排序" },
       component: () => import("../views/Num2.vue"),
+    },
+    {
+      path: "/num3",
+      name: "num3",
+      meta: { title: "快速排序" },
+      component: () => import("../views/Num3.vue"),
     },
   ],
 })
