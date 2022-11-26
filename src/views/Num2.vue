@@ -9,8 +9,6 @@
 </template>
 
 <script setup>
-import { ref, reactive } from "vue"
-
 const sortNum = ref("")
 const input = ref()
 const res = ref([])

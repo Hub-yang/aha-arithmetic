@@ -1,45 +1,41 @@
 <template>
-  <h3>冒泡排序，输入整数，以","隔开，点击按钮查看排序结果</h3>
-  <input type="text" v-focus ref="input" v-model.trim="sortNum" />
+  <h3>快速排序，输入整数，以","隔开，点击按钮查看排序结果</h3>
+  <input type="text" v-focus v-model.trim="sortNum" />
   <button @click="handleClick('asc')">升序排序</button>
   <button @click="handleClick('desc')">降序排序</button>
   <h3>
-    <!-- 结果：<span v-show="res.length">{{ res }}</span> -->
+    结果：<span v-if="res.length">{{ res }}</span>
   </h3>
 </template>
 
 <script setup>
-import { ref } from "vue"
-
 const sortNum = ref("")
-const input = ref()
 const res = ref([])
-
-let sortArr = [6, 1, 2, 7, 9, 3, 4, 5, 10, 8]
+let sortArr = []
 
 function handleClick(sortBy) {
-  // const sortArr = sortNum.value
-  //   .replace(/\s*/g, "")
-  //   .split(",")
-  //   .map((num) => Number(num))
+  if (sortNum.value) {
+    sortArr = sortNum.value.split(",").map(item => Number(item))
+    // 初始化left与right
+    let left = 0
+    let right = sortArr.length - 1
 
-  // 初始化left与right
-  let left = 0
-  let right = sortArr.length - 1
-
-  if (sortBy === "asc") {
-    res.value = quicksortByAsc(left, right, sortArr)
-    console.log(res.value)
-  } else if (sortBy === "desc") {
-    res.value = quicksortByDesc(left, right, sortArr)
-    console.log(res.value)
+    if (sortBy === "asc") {
+      quicksortByAsc(left, right)
+      res.value = sortArr
+    } else if (sortBy === "desc") {
+      quicksortByDesc(left, right)
+      res.value = sortArr
+    }
+    setTimeout(() => {
+      sortNum.value = ""
+    }, 100)
+  } else {
+    alert("请输入数字，并以‘,’隔开")
   }
-  setTimeout(() => {
-    sortNum.value = ""
-  }, 100)
 }
 
-function quicksortByAsc(left, right, sortArr) {
+function quicksortByAsc(left, right) {
   if (left > right) {
     return
   }
@@ -71,14 +67,15 @@ function quicksortByAsc(left, right, sortArr) {
   sortArr[i] = temp
 
   // 递归处理基准数左边的
-  quicksortByAsc(left, i - 1, sortArr)
+  quicksortByAsc(left, i - 1)
   // 递归处理基准数右边的
-  quicksortByAsc(i + 1, right, sortArr)
+  quicksortByAsc(i + 1, right)
+  return
 }
 
-function quicksortByDesc(left, right, sortArr) {
+function quicksortByDesc(left, right) {
   if (left > right) {
-    return sortArr
+    return
   }
 
   // 定义循环变量
@@ -88,11 +85,11 @@ function quicksortByDesc(left, right, sortArr) {
 
   while (i != j) {
     // 从右侧开始
-    while (sortArr[j] >= temp && i < j) {
+    while (sortArr[j] <= temp && i < j) {
       j--
     }
 
-    while (sortArr[i] <= temp && i < j) {
+    while (sortArr[i] >= temp && i < j) {
       i++
     }
 
@@ -104,10 +101,13 @@ function quicksortByDesc(left, right, sortArr) {
   sortArr[left] = sortArr[i]
   sortArr[i] = temp
   // 递归处理左侧
-  quicksortByDesc(left, i - 1, sortArr)
+  quicksortByDesc(left, i - 1)
   // 递归处理右侧
-  quicksortByDesc(i + 1, right, sortArr)
+  quicksortByDesc(i + 1, right)
+  return
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+
+</style>
